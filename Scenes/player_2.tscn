@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://cttoo46ug334s"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_0kade"]
+[ext_resource type="Texture2D" uid="uid://dhxx48yx07cyh" path="res://Assets/character neutral animation.png" id="2_rnejb"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x7tpi"]
+height = 48.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ap5mt"]
+atlas = ExtResource("2_rnejb")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8l81v"]
+atlas = ExtResource("2_rnejb")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x5fde"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ap5mt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8l81v")
+}],
+"loop": true,
+"name": &"neutral",
+"speed": 2.0
+}]
+
+[node name="Player2" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_0kade")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_x7tpi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -8)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_x5fde")
+animation = &"neutral"
+autoplay = "neutral"
+flip_h = true

@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://doj371c1udef5"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_dm20s"]
+[ext_resource type="PackedScene" uid="uid://d0r1nri00g81m" path="res://Scenes/player.tscn" id="2_3ujqx"]
+[ext_resource type="PackedScene" uid="uid://cttoo46ug334s" path="res://Scenes/player_2.tscn" id="3_ytmw7"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_323hb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q384f"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_dm20s")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_323hb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+scale = Vector2(20, 1)
+shape = SubResource("RectangleShape2D_q384f")
+
+[node name="Player" parent="." instance=ExtResource("2_3ujqx")]
+position = Vector2(-64, -64)
+
+[node name="Player2" parent="." instance=ExtResource("3_ytmw7")]
+position = Vector2(64, -64)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -104)
+zoom = Vector2(3, 3)
