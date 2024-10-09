@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+#@onready var camera: camera2D = get_node("")
+
 # character movement is smoother when a multiple of 60.
 const SPEED_MULTIPLIER = 3
 const SPEED = 60.0 * SPEED_MULTIPLIER
@@ -9,9 +11,6 @@ var move_left = "move_left"
 var move_right = "move_right"
 var jump = "jump"
 var crouch = "crouch"
-
-
-
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -30,3 +29,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_tree_entered() -> void:
+	var player = 1
+	if player = 1:
+		pass
+	else:
+		
