@@ -7,10 +7,22 @@ const SPEED_MULTIPLIER = 3
 const SPEED = 60.0 * SPEED_MULTIPLIER
 const JUMP_VELOCITY = -400.0
 
-var move_left = "move_left"
-var move_right = "move_right"
-var jump = "jump"
-var crouch = "crouch"
+static var player = 1
+
+func _init():
+	player += 1
+	print(player)
+
+#takes in general action then changes to player specific action (ie: "move_left" -> "p1_move_left")
+func player_action(action):
+	var new_action = "p" + str(player) + "_" + action
+	print(new_action)
+	return new_action
+
+var move_left = player_action("move_left")
+var move_right = player_action("move_right")
+var jump = player_action("jump")
+var crouch = player_action("crouch")
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -29,11 +41,3 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-
-
-func _on_tree_entered() -> void:
-	var player = 1
-	if player = 1:
-		pass
-	else:
-		
