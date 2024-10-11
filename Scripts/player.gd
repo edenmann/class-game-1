@@ -9,9 +9,23 @@ const JUMP_VELOCITY = -400.0
 
 static var player = 1
 
+#direction that the characters are facing, "right", or "left" 
+var facing = ""
+
+#when a new player node is initialized, the player 
 func _init():
+	if player == 1:
+		facing = "right"
+	else:
+		facing = "left"
+
+	print(facing)
 	player += 1
 	print(player)
+
+	
+
+	
 
 #takes in general action then changes to player specific action (ie: "move_left" -> "p1_move_left")
 func player_action(action):

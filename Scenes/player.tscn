@@ -40,6 +40,9 @@ script = ExtResource("1_hw4g0")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_x7tpi")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-11, 23.5, -12, 21.5, -9, 13.5, -6.5, -6.5, -8.5, -8.5, -6, -16.5, -3, -18, 0, -22.5, 7.5, -22.5, 8.5, -20, 7, -17, 11, -10.5, 17.5, -19, 21.5, -15.5, 11.5, -5.5, 7, -9, 5.5, -3.5, 9.5, 8.5, 9, 21.5, 13, 24)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -8)
 scale = Vector2(0.5, 0.5)
