@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 #@onready var camera: camera2D = get_node("")
-@onready var char_animation: AnimatedSprite2D = self.get_node("AnimatedSprite2D")
+
 
 # character movement is smoother when a multiple of 60.
 const SPEED_MULTIPLIER = 3
@@ -15,28 +15,29 @@ static var player = 1
 #direction that the characters are facing, "right", or "left" 
 var facing = ""
 
+
 #when a new player node is initialized, the player 
 func _init():
-	
 	if player == 1:
 		facing = "right"
-
 	else:
 		facing = "left"
-		char_animation.set_flip_h(false)
 		
-
-	#face_direction()
-
 	print(facing)
 	player += 1
 	print(player)
 
-func face_direction():
+func _on_animated_sprite_2d_ready() -> void:
 	if facing == "right":
-		char_animation.flip_h = false
+		$AnimatedSprite2D.flip_h = false
 	else:
-		char_animation.flip_h = true
+		$AnimatedSprite2D.flip_h = true
+
+#func face_direction():
+#	if facing == "right":
+#		char_animation.flip_h = false
+#	else:
+#		char_animation.flip_h = true
 
 #takes in general action then changes to player specific action (ie: "move_left" -> "p1_move_left")
 func player_action(action):
