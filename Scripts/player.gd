@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 #@onready var camera: camera2D = get_node("")
 
+signal example
+
 
 # character movement is smoother when a multiple of 60.
 const SPEED_MULTIPLIER = 3
