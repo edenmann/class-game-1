@@ -2,44 +2,34 @@ extends CharacterBody2D
 
 #@onready var camera: camera2D = get_node("")
 
-signal example
-
-
 # character movement is smoother when a multiple of 60.
 const SPEED_MULTIPLIER = 3
 const SPEED = 60.0 * SPEED_MULTIPLIER
 const JUMP_VELOCITY = -400.0
 
-
-
 static var player = 1
 
-#direction that the characters are facing, "right", or "left" 
-var facing = ""
+# side that the characters are on. "left" or "right" 
+var side = ""
 
 
 #when a new player node is initialized, the player 
 func _init():
 	if player == 1:
-		facing = "right"
+		side = "left"
 	else:
-		facing = "left"
+		side = "right"
 		
-	print(facing)
+	print(side)
 	player += 1
 	print(player)
 
 func _on_animated_sprite_2d_ready() -> void:
-	if facing == "right":
+	if side == "left":
 		$AnimatedSprite2D.flip_h = false
 	else:
 		$AnimatedSprite2D.flip_h = true
 
-#func face_direction():
-#	if facing == "right":
-#		char_animation.flip_h = false
-#	else:
-#		char_animation.flip_h = true
 
 #takes in general action then changes to player specific action (ie: "move_left" -> "p1_move_left")
 func player_action(action):
@@ -69,3 +59,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+	if Main.player_side(player) == "left":
+		$AnimatedSprite2D.flip_h = false
+	else:
+		$AnimatedSprite2D.flip_h = true
+	
