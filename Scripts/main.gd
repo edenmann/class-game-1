@@ -14,9 +14,12 @@ func _ready() -> void:
 
 
 # pos_dif is x position difference. player 1 position minus player 2 position. used to determine which side the player is on.
+
+var pos_dif = p1.position[0] - p2.position[0]
+
 func player_side(player_num):
 
-	var pos_dif = p1.position[0] - p2.position[0]
+	
 
 	if pos_dif <= 0:
 		if player_num == 1:
@@ -34,8 +37,7 @@ func player_side(player_num):
 
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print("player 1 position:" + str(p1.position[0]))
-
-
+	print("player position difference:" + str(pos_dif))
