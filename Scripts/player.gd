@@ -12,19 +12,20 @@ static var player = 1
 # side that the characters are on. "left" or "right" 
 var side = ""
 
-
 #when a new player node is initialized, the player 
 func _init():
+	player +=1
 	if player == 1:
 		side = "left"
 	else:
 		side = "right"
 		
 	print(side)
-	player += 1
+	#player += 1
 	print(player)
 
 func _on_animated_sprite_2d_ready() -> void:
+
 	if side == "left":
 		$AnimatedSprite2D.flip_h = false
 	else:
@@ -41,6 +42,7 @@ var move_left = player_action("move_left")
 var move_right = player_action("move_right")
 var jump = player_action("jump")
 var crouch = player_action("crouch")
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -61,8 +63,14 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-	if Main.player_side(player) == "left":
+	#if Main.player_side(player) == "left":
+	#	sprite.flip_h = false
+	#else:
+	#	sprite.flip_h = true
+
+
+func _on_main_side_changed() -> void:
+	if $AnimatedSprite2D.flip_h == true:
 		$AnimatedSprite2D.flip_h = false
-	else:
+	elif $AnimatedSprite2D.flip_h == false:
 		$AnimatedSprite2D.flip_h = true
-	
