@@ -8,9 +8,14 @@ signal side_changed()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	p1= $Player1
-	p2= $Player2
+	pass
+	
 
+func _on_player_1_tree_entered() -> void:
+	p1= $Player1
+
+func _on_player_2_tree_entered() -> void:
+	p2= $Player2
 
 # pos_dif is x position difference. player 1 position minus player 2 position. used to determine which side the player is on.
 
@@ -41,4 +46,4 @@ func player_side_change():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	player_side_change()
-	
+

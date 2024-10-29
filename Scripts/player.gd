@@ -7,23 +7,37 @@ const SPEED_MULTIPLIER = 3
 const SPEED = 60.0 * SPEED_MULTIPLIER
 const JUMP_VELOCITY = -400.0
 
-static var player = 1
+static var static_player = 0
+var player: int
 
 # side that the characters are on. "left" or "right" 
 var side = ""
 
+
+func player_action(action):
+	var new_action = "p" + str(player) + "_" + action
+	print(new_action)
+	return new_action
+
+
 #when a new player node is initialized, the player 
 func _init():
-	player +=1
+
+	static_player += 1
+	player = static_player
+
+	print(player)
+	print(side)
+
 	if player == 1:
 		side = "left"
 	else:
 		side = "right"
 		
-	print(side)
-	#player += 1
-	print(player)
 
+
+
+	
 func _on_animated_sprite_2d_ready() -> void:
 
 	if side == "left":
@@ -33,15 +47,19 @@ func _on_animated_sprite_2d_ready() -> void:
 
 
 #takes in general action then changes to player specific action (ie: "move_left" -> "p1_move_left")
-func player_action(action):
-	var new_action = "p" + str(player) + "_" + action
-	print(new_action)
-	return new_action
 
-var move_left = player_action("move_left")
-var move_right = player_action("move_right")
-var jump = player_action("jump")
-var crouch = player_action("crouch")
+var move_left
+var move_right
+var jump
+var crouch
+
+func _ready():
+	move_left = player_action("move_left")
+	move_right = player_action("move_right")
+	jump = player_action("jump")
+	crouch = player_action("crouch")
+
+
 
 
 func _physics_process(delta: float) -> void:
@@ -61,15 +79,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-
-
-	#if Main.player_side(player) == "left":
-	#	sprite.flip_h = false
-	#else:
-	#	sprite.flip_h = true
-
+	
 
 func _on_main_side_changed() -> void:
+	print("player " + str(player) + " flip_h: " + str($AnimatedSprite2D.flip_h))
+
 	if $AnimatedSprite2D.flip_h == true:
 		$AnimatedSprite2D.flip_h = false
 	elif $AnimatedSprite2D.flip_h == false:

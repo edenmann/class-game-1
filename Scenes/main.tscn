@@ -20,3 +20,5 @@ position = Vector2(-64, -64)
 position = Vector2(64, -64)
 
 [connection signal="side_changed" from="." to="Player1" method="_on_main_side_changed"]
+[connection signal="tree_entered" from="Player1" to="." method="_on_player_1_tree_entered"]
+[connection signal="tree_entered" from="Player2" to="." method="_on_player_2_tree_entered"]
