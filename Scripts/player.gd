@@ -14,8 +14,11 @@ var player: int
 var side = ""
 
 
-func player_action(action):
+# startup is the time it takes for action to happen, in frames (1/60th of a second)
+func player_action(action, startup: int = 0):
 	var new_action = "p" + str(player) + "_" + action
+	if startup > 0:
+		new_action = [new_action, startup]
 	print(new_action)
 	return new_action
 
@@ -33,9 +36,6 @@ func _init():
 		side = "left"
 	else:
 		side = "right"
-		
-
-
 
 	
 func _on_animated_sprite_2d_ready() -> void:
@@ -47,6 +47,7 @@ func _on_animated_sprite_2d_ready() -> void:
 
 
 #takes in general action then changes to player specific action (ie: "move_left" -> "p1_move_left")
+#each action has startup time counted in frames (1/60th of a second)
 
 var move_left
 var move_right
@@ -56,7 +57,7 @@ var crouch
 func _ready():
 	move_left = player_action("move_left")
 	move_right = player_action("move_right")
-	jump = player_action("jump")
+	jump = player_action("jump", 5)
 	crouch = player_action("crouch")
 
 
@@ -66,13 +67,17 @@ var in_hit: bool
 
 var last_velocity: float
 
+var frame: float = 1.0/60.0
+var in_startup
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
+	#print(delta)
 
 	if is_on_floor():
 		on_floor = true
 		in_air = false
-		last_velocity = velocity.x
+		
 
 	#if not is_on_floor():
 	else:
@@ -84,9 +89,10 @@ func _physics_process(delta: float) -> void:
 
 
 	# Handle jump.
-	if Input.is_action_pressed(jump) and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		
+	if Input.is_action_pressed(jump[0]) and is_on_floor():
+		if delta >= jump[1]:
+			velocity.y = JUMP_VELOCITY
+			last_velocity = velocity.x
 		
 
 	# Get the input direction and handle the movement/deceleration.
