@@ -18,8 +18,11 @@ var side = ""
 func player_action(action, startup: int = 0):
 	var new_action = "p" + str(player) + "_" + action
 	if startup > 0:
-		new_action = [new_action, startup]
-	print(new_action)
+		#new_action = [new_action, startup]
+		new_action = {"action": new_action,"startup": startup}
+		print(new_action["action"], " startup: ", new_action["startup"] )
+	elif startup == 0:
+		print(new_action)
 	return new_action
 
 
@@ -68,7 +71,14 @@ var in_hit: bool
 var last_velocity: float
 
 var frame: float = 1.0/60.0
-var in_startup
+var in_startup: bool
+
+var time_
+
+func action_startup(action):
+	in_startup = true
+	await get_tree().create_timer(action["startup"]*frame).timeout
+	in_startup = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -77,7 +87,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		on_floor = true
 		in_air = false
-		
 
 	#if not is_on_floor():
 	else:
@@ -89,10 +98,10 @@ func _physics_process(delta: float) -> void:
 
 
 	# Handle jump.
-	if Input.is_action_pressed(jump[0]) and is_on_floor():
-		if delta >= jump[1]:
-			velocity.y = JUMP_VELOCITY
-			last_velocity = velocity.x
+	if Input.is_action_just_pressed(jump["action"]) and is_on_floor():
+		action_startup(jump)
+		velocity.y = JUMP_VELOCITY
+		last_velocity = velocity.x
 		
 
 	# Get the input direction and handle the movement/deceleration.
