@@ -17,10 +17,10 @@ func _on_player_1_tree_entered() -> void:
 func _on_player_2_tree_entered() -> void:
 	p2= $Player2
 
-# pos_dif is x position difference. player 1 position minus player 2 position. used to determine which side the player is on.
 
-func pos_dif():
-	return (p1.position[0] - p2.position[0])
+# used for camera positioning
+static func pos_dif():
+	return (p1.position[0] + p2.position[0])
 
 var pos_time = 0
 var p1_past_side

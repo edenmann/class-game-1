@@ -60,7 +60,7 @@ var crouch
 func _ready():
 	move_left = player_action("move_left")
 	move_right = player_action("move_right")
-	jump = player_action("jump", 5)
+	jump = player_action("jump", 2)
 	crouch = player_action("crouch")
 
 
@@ -71,24 +71,15 @@ var in_hit: bool
 var last_velocity: float
 
 var frame: float = 1.0/60.0
-var in_startup: bool
-
-var time_
-
-func action_startup(action):
-	in_startup = true
-	await get_tree().create_timer(action["startup"]*frame).timeout
-	in_startup = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	#print(delta)
 
 	if is_on_floor():
 		on_floor = true
 		in_air = false
 
-	#if not is_on_floor():
+	#when in air
 	else:
 		velocity += get_gravity() * delta
 		velocity.x = last_velocity
@@ -98,10 +89,10 @@ func _physics_process(delta: float) -> void:
 
 
 	# Handle jump.
-	if Input.is_action_just_pressed(jump["action"]) and is_on_floor():
-		action_startup(jump)
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_pressed(jump["action"]) and is_on_floor():
 		last_velocity = velocity.x
+		await get_tree().create_timer(jump["startup"]*frame).timeout
+		velocity.y = JUMP_VELOCITY
 		
 
 	# Get the input direction and handle the movement/deceleration.
