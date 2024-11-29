@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxh3e562fmq54"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kcgqr"]
+rough = true
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_es3ts"]
+distance = -1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6u75"]
+size = Vector2(32, 320)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_kcgqr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(20, 1)
+shape = SubResource("WorldBoundaryShape2D_es3ts")
+
+[node name="left wall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left wall"]
+position = Vector2(-464, -160)
+shape = SubResource("RectangleShape2D_x6u75")
+
+[node name="right wall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right wall"]
+position = Vector2(464, -160)
+shape = SubResource("RectangleShape2D_x6u75")
